@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Туынды: оқушыларға арналған сайт</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap">
+<style>
+:root{--bg:#f2f6fb;--grid:#d9e4f1;--ink:#14213d;--mute:#51607a;--card:#fff;--line:#c5d3e6;--curve:#1f6feb;--tan:#c2255c;--sec:#e08a00;--ok:#1b8a5a;--bad:#c2255c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1729;--grid:#1c2740;--ink:#e8eefb;--mute:#9fb0cf;--card:#172036;--line:#2b3a5c;--curve:#6aa5ff;--tan:#ff6b9a;--sec:#ffb340;--ok:#4cd39a;--bad:#ff6b9a}}
+:root[data-theme="dark"]{--bg:#0f1729;--grid:#1c2740;--ink:#e8eefb;--mute:#9fb0cf;--card:#172036;--line:#2b3a5c;--curve:#6aa5ff;--tan:#ff6b9a;--sec:#ffb340;--ok:#4cd39a;--bad:#ff6b9a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 "PT Sans",system-ui,sans-serif;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:32px 32px}
+main{max-width:980px;margin:0 auto;padding:24px 18px 56px}
+h1,h2,h3{font-family:"PT Serif",Georgia,serif;line-height:1.2;margin:0 0 .5em}
+h1{font-size:clamp(30px,6vw,52px)}
+h2{font-size:clamp(24px,4vw,32px);margin-top:1.8em}
+p{max-width:68ch;margin:0 0 1em}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:28px}
+nav a{color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--card);padding:6px 14px;border-radius:99px;font-size:16px}
+nav a:hover,nav a:focus-visible{border-color:var(--curve);outline:2px solid var(--curve);outline-offset:2px}
+.lead{font-size:20px;color:var(--mute)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.lab{display:grid;grid-template-columns:1fr;gap:16px;margin-top:20px}
+@media(min-width:820px){.lab{grid-template-columns:2fr 1fr}}
+canvas{width:100%;height:auto;aspect-ratio:3/2;display:block;border-radius:10px;background:var(--card);border:1px solid var(--line)}
+label{display:block;font-weight:700;margin:12px 0 4px;font-size:16px}
+select,input[type=range]{width:100%;font:inherit}
+select{padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+input[type=range]{accent-color:var(--curve)}
+.out{font-family:"PT Serif",serif;font-size:17px;margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.out b{display:inline-block;min-width:3.2em}
+.k-sec{color:var(--sec)}.k-tan{color:var(--tan)}.k-cur{color:var(--curve)}
+.formula{font-family:"PT Serif",serif;font-size:22px;text-align:center;padding:14px;border-left:4px solid var(--curve);background:var(--card);border-radius:8px;margin:12px 0}
+.three{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;background:var(--card);border-radius:10px;font-family:"PT Serif",serif}
+th,td{border:1px solid var(--line);padding:8px 14px;text-align:left}
+th{font-family:"PT Sans",sans-serif}
+.q{margin-bottom:14px}
+.q p{font-weight:700;margin-bottom:8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font:inherit;padding:8px 18px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.opts button:hover,.opts button:focus-visible{border-color:var(--curve);outline:2px solid var(--curve)}
+.opts button.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.opts button.bad{background:var(--bad);border-color:var(--bad);color:#fff}
+.fb{font-size:16px;color:var(--mute);margin-top:6px;min-height:1.4em}
+#score{font-weight:700;font-size:20px}
+footer{margin-top:48px;color:var(--mute);font-size:15px}
+.zrow{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin:10px 0}
+.zrow div{flex:1 1 120px}
+.zrow input,#zf,#zexp{font:inherit;width:100%;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.btn{font:inherit;font-weight:700;padding:9px 18px;border-radius:8px;border:1px solid var(--curve);background:var(--curve);color:#fff;cursor:pointer}
+.btn.sec{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+#zlog td,#zlog th{padding:4px 12px;font-size:16px}
+#zres div{margin:2px 0}.zok{color:var(--ok)}.zno{color:var(--bad)}
+.zi{font:inherit;width:100%;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.eb{display:block;width:100%;text-align:left;font-family:"PT Serif",serif;font-size:19px;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer;margin-top:8px}
+.eb:focus-visible,.eb:hover{border-color:var(--curve);outline:2px solid var(--curve)}
+</style>
+</head>
+<body>
+<main>
+<nav aria-label="Бөлімдер"><a href="#lab">График</a><a href="#zert">Зертхана</a><a href="#zhanama">Жанама</a><a href="#qate">Қатені тап</a><a href="#myq">Өз есебім</a><a href="#teoria">Теория</a><a href="#formula">Формулалар</a><a href="#test">Тест</a></nav>
+
+<h1>Туынды — қисық сызықтың еңісі</h1>
+<p class="lead">Функцияның бір нүктедегі туындысы — сол нүктеге жүргізілген жанаманың еңісі. Төмендегі графикте өзіңіз көріңіз.</p>
+
+<section id="lab" class="lab" aria-label="Интерактивті график">
+  <div class="card"><canvas id="cv" width="900" height="600" role="img" aria-label="Функция графигі, қиюшы және жанама"></canvas></div>
+  <div class="card">
+    <label for="fn">Функция</label>
+    <select id="fn"></select>
+    <label for="x0">Нүкте: x₀ = <span id="x0v"></span></label>
+    <input id="x0" type="range" min="-3" max="3" step="0.1" value="1">
+    <label for="h">Қадам: h = <span id="hv"></span></label>
+    <input id="h" type="range" min="0" max="2" step="0.01" value="1.5">
+    <p style="font-size:15px;color:var(--mute);margin:8px 0 0">h-ты нөлге жақындатыңыз: қиюшы жанамаға айналады.</p>
+    <div class="out">
+      <div><b class="k-cur">f(x₀)</b> = <span id="fv"></span></div>
+      <div><b class="k-sec">Қиюшы</b> k = <span id="ks"></span></div>
+      <div><b class="k-tan">f′(x₀)</b> = <span id="kt"></span></div>
+      <div class="k-tan">y = <span id="eq"></span></div>
+    </div>
+  </div>
+</section>
+
+<section id="teoria">
+<h2>Теория</h2>
+<p>Функцияның x₀ нүктесіндегі туындысы деп аргумент өсімшесі нөлге ұмтылғандағы функция өсімшесінің аргумент өсімшесіне қатынасының шегін айтады:</p>
+<div class="formula">f′(x₀) = lim<sub>h→0</sub> (f(x₀ + h) − f(x₀)) / h</div>
+<div class="three">
+  <div class="card"><h3>Геометриялық мағынасы</h3><p>Туынды — f функциясының графигіне (x₀; f(x₀)) нүктесінде жүргізілген жанаманың бұрыштық коэффициенті: k = f′(x₀).</p></div>
+  <div class="card"><h3>Физикалық мағынасы</h3><p>Дененің жолы s(t) болса, жылдамдық v(t) = s′(t), ал үдеу a(t) = v′(t).</p></div>
+  <div class="card"><h3>Жанама теңдеуі</h3><p>y = f(x₀) + f′(x₀)·(x − x₀). Графиктегі қызыл сызық осы формуламен салынады.</p></div>
+</div>
+</section>
+
+<section id="formula">
+<h2>Формулалар мен ережелер</h2>
+<div class="tw"><table>
+<tr><th>f(x)</th><th>f′(x)</th><th>f(x)</th><th>f′(x)</th></tr>
+<tr><td>C (тұрақты)</td><td>0</td><td>sin x</td><td>cos x</td></tr>
+<tr><td>xⁿ</td><td>n·xⁿ⁻¹</td><td>cos x</td><td>−sin x</td></tr>
+<tr><td>√x</td><td>1 / (2√x)</td><td>tg x</td><td>1 / cos²x</td></tr>
+<tr><td>1/x</td><td>−1/x²</td><td>eˣ</td><td>eˣ</td></tr>
+<tr><td>ln x</td><td>1/x</td><td>aˣ</td><td>aˣ·ln a</td></tr>
+</table></div>
+<h3 style="margin-top:1.2em">Есептеу ережелері</h3>
+<div class="tw"><table>
+<tr><td>Қосынды</td><td>(u + v)′ = u′ + v′</td></tr>
+<tr><td>Тұрақты көбейткіш</td><td>(c·u)′ = c·u′</td></tr>
+<tr><td>Көбейтінді</td><td>(u·v)′ = u′v + uv′</td></tr>
+<tr><td>Бөлінді</td><td>(u/v)′ = (u′v − uv′) / v²</td></tr>
+<tr><td>Күрделі функция</td><td>(f(g(x)))′ = f′(g(x))·g′(x)</td></tr>
+</table></div>
+</section>
+
+<section id="zert">
+<h2>Зертхана: формуланы өзің тап</h2>
+<p>Бұл жерде дайын жауап жоқ. Әр тапсырма кездейсоқ құрылады, сондықтан саған тек өзіңе түскен функция келеді. Еңісті өлшеп, сандардан заңдылықты байқа да, f′(x) формуласын өзің жаз. Сайт жауабын айтпайды, тек формуланы тексереді.</p>
+<div class="card">
+<div id="ztask" class="formula"></div>
+<div class="zrow">
+<div><label for="zx">x</label><input id="zx" value="1" inputmode="decimal"></div>
+<div><label for="zh">h</label><input id="zh" value="0.1" inputmode="decimal"></div>
+<button class="btn" id="zm" type="button">Еңісті өлше</button>
+</div>
+<div class="tw"><table id="zlog"><tr><th>x</th><th>h</th><th>қиюшы еңісі</th></tr></table></div>
+<label for="zf" style="margin-top:16px">Менің формулам: f′(x) =</label>
+<input id="zf" placeholder="мысалы: 3*x^2 - sin(x)" autocomplete="off">
+<div class="zrow"><button class="btn" id="zc" type="button">Тексер</button><button class="btn sec" id="zhb" type="button">Кеңес</button><button class="btn sec" id="zn" type="button">Жаңа тапсырма</button></div>
+<div id="zres" aria-live="polite"></div>
+<div id="zhint" class="fb" aria-live="polite"></div>
+<div id="zdone" hidden><label for="zexp">Қалай таптың? Бір-екі сөйлеммен өз сөзіңмен жаз (мұғалімге көрсетуге болады).</label><textarea id="zexp" rows="3"></textarea></div>
+<p id="zstat" class="fb"></p>
+</div>
+</section>
+
+<section id="zhanama">
+<h2>Жанаманы өзің жаз</h2>
+<p>Функция мен нүкте кездейсоқ беріледі. Жанаманың теңдеуін өзің құрып жаз, сайт сызығыңды графикке салады. Жауап көрсетілмейді.</p>
+<div class="card">
+<div id="tf" class="formula"></div>
+<canvas id="cv2" width="900" height="600" role="img" aria-label="Функция графигі және сенің жанамаң"></canvas>
+<div class="zrow"><div><label for="th">Өлшеу қадамы h</label><input id="th" class="zi" value="0.01"></div><button class="btn sec" id="tm" type="button">Еңісті өлше</button></div>
+<label for="tin">Менің жанамам: y =</label>
+<input id="tin" class="zi" placeholder="мысалы: 2*x - 1" autocomplete="off">
+<div class="zrow"><button class="btn" id="tc" type="button">Сал және тексер</button><button class="btn sec" id="tn" type="button">Жаңа тапсырма</button></div>
+<div id="tres" class="fb" aria-live="polite"></div>
+</div>
+</section>
+
+<section id="qate">
+<h2>Қатені тап</h2>
+<p>Төмендегі шешімде бір қате бар. Дұрыс емес жолды бас. Неге қате екенін өзің түсінгенде ғана таба аласың.</p>
+<div class="card"><div id="err"></div><div class="zrow"><button class="btn sec" id="en" type="button">Жаңа шешім</button></div></div>
+</section>
+
+<section id="myq">
+<h2>Өз есебіңді құрастыр</h2>
+<p>Өмірден өз есебіңді ойлап тап, алдымен нәтижесін болжа, содан кейін өлшеп тексер. Бұл бөлімді тек сен өзің толтыра аласың.</p>
+<div class="card">
+<label for="cs">Есеп мәтіні (мысалы: велосипедші жолы x секундта қалай өседі)</label>
+<textarea id="cs" class="zi" rows="2"></textarea>
+<div class="zrow"><div style="flex:3 1 220px"><label for="cf">Жол немесе шама: s(x) =</label><input id="cf" class="zi" placeholder="мысалы: 2*x^2 + 3*x" autocomplete="off"></div>
+<div><label for="cx">x₀</label><input id="cx" class="zi" value="2" inputmode="decimal"></div></div>
+<label for="cp">Алдымен болжа: s′(x₀) шамамен неге тең?</label>
+<input id="cp" class="zi" inputmode="decimal">
+<div class="zrow"><button class="btn" id="cc" type="button">Болжамды тексер</button><button class="btn sec" id="cm" type="button">Өлшеп көр</button></div>
+<div id="cr" class="fb" aria-live="polite"></div>
+<label for="ce">Нәтиже болжамыңа сай ма? Неге?</label>
+<textarea id="ce" class="zi" rows="2"></textarea>
+<div class="zrow"><button class="btn" id="cw" type="button">Жұмыс парағын жина</button></div>
+<textarea id="cwo" class="zi" rows="9" readonly hidden aria-label="Жұмыс парағы"></textarea>
+</div>
+</section>
+
+<section id="test">
+<h2>Өзіңді тексер</h2>
+<div id="quiz" class="card"></div>
+<p id="score" aria-live="polite"></p>
+</section>
+
+<footer>Дипломдық жұмыстың практикалық бөлімі. Оқушыларға арналған туынды тақырыбы бойынша оқу сайты.</footer>
+</main>
+
+<script>
+(function(){
+var F=[
+ {n:"f(x) = x²",f:function(x){return x*x},d:function(x){return 2*x},t:"x²",y:[-2,10]},
+ {n:"f(x) = x³ − 3x",f:function(x){return x*x*x-3*x},d:function(x){return 3*x*x-3},t:"x³ − 3x",y:[-6,6]},
+ {n:"f(x) = sin x",f:Math.sin,d:Math.cos,t:"sin x",y:[-3,3]},
+ {n:"f(x) = eˣ",f:Math.exp,d:Math.exp,t:"eˣ",y:[-2,10]}
+];
+var $=function(i){return document.getElementById(i)};
+var fn=$("fn"),x0=$("x0"),hh=$("h"),cv=$("cv"),ctx=cv.getContext("2d");
+F.forEach(function(o,i){var e=document.createElement("option");e.value=i;e.textContent=o.n;fn.appendChild(e)});
+var X=[-4,4],W=900,H=600;
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function r(v){return (Math.round(v*100)/100).toString().replace("-","−")}
+function draw(){
+ var o=F[fn.value],a=+x0.value,h=+hh.value,Y=o.y;
+ var sx=function(x){return (x-X[0])/(X[1]-X[0])*W},sy=function(y){return H-(y-Y[0])/(Y[1]-Y[0])*H};
+ ctx.clearRect(0,0,W,H);
+ ctx.lineWidth=1;ctx.strokeStyle=css("--grid");ctx.fillStyle=css("--mute");ctx.font="20px 'PT Sans',sans-serif";
+ for(var i=Math.ceil(X[0]);i<=X[1];i++){ctx.beginPath();ctx.moveTo(sx(i),0);ctx.lineTo(sx(i),H);ctx.stroke()}
+ for(var j=Math.ceil(Y[0]);j<=Y[1];j++){ctx.beginPath();ctx.moveTo(0,sy(j));ctx.lineTo(W,sy(j));ctx.stroke()}
+ ctx.strokeStyle=css("--mute");ctx.lineWidth=2;
+ ctx.beginPath();ctx.moveTo(0,sy(0));ctx.lineTo(W,sy(0));ctx.stroke();
+ ctx.beginPath();ctx.moveTo(sx(0),0);ctx.lineTo(sx(0),H);ctx.stroke();
+ ctx.fillText("x",W-18,sy(0)-8);ctx.fillText("y",sx(0)+8,20);
+ function line(k,c,w){var y1=o.f(a)+k*(X[0]-a),y2=o.f(a)+k*(X[1]-a);ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(sx(X[0]),sy(y1));ctx.lineTo(sx(X[1]),sy(y2));ctx.stroke()}
+ var k=o.d(a),ks=h>0.005?(o.f(a+h)-o.f(a))/h:k;
+ if(h>0.005)line(ks,css("--sec"),3);
+ line(k,css("--tan"),3);
+ ctx.strokeStyle=css("--curve");ctx.lineWidth=4;ctx.beginPath();
+ for(var px=0;px<=W;px+=3){var x=X[0]+px/W*(X[1]-X[0]),y=o.f(x);px?ctx.lineTo(px,sy(y)):ctx.moveTo(px,sy(y))}
+ ctx.stroke();
+ function dot(x,c){ctx.fillStyle=c;ctx.beginPath();ctx.arc(sx(x),sy(o.f(x)),8,0,7);ctx.fill()}
+ if(h>0.005)dot(a+h,css("--sec"));dot(a,css("--tan"));
+ $("x0v").textContent=r(a);$("hv").textContent=r(h);
+ $("fv").textContent=r(o.f(a));$("ks").textContent=h>0.005?r(ks):"= f′(x₀)";$("kt").textContent=r(k);
+ var b=o.f(a)-k*a;$("eq").textContent=r(k)+"·x "+(b<0?"− ":"+ ")+r(Math.abs(b));
+}
+[fn,x0,hh].forEach(function(e){e.addEventListener("input",draw)});
+window.addEventListener("resize",draw);
+if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",draw);
+draw();
+
+var Q=[
+ {q:"(x⁵)′ неге тең?",o:["x⁴","5x⁴","5x⁵","4x⁵"],a:1,e:"(xⁿ)′ = n·xⁿ⁻¹ формуласы: n = 5."},
+ {q:"(sin x)′ неге тең?",o:["cos x","−cos x","−sin x","tg x"],a:0,e:"Синустың туындысы — косинус."},
+ {q:"f(x) = x² функциясының графигіне x₀ = 3 нүктесінде жүргізілген жанаманың бұрыштық коэффициенті қанша?",o:["3","6","9","2"],a:1,e:"f′(x) = 2x, сондықтан f′(3) = 6."},
+ {q:"(3x² + 2x)′ неге тең?",o:["6x + 2","3x + 2","6x² + 2","6x"],a:0,e:"Қосынды ережесі: (3x²)′ = 6x, (2x)′ = 2."},
+ {q:"Дененің жолы s(t) болса, s′(t) нені білдіреді?",o:["Үдеуді","Жылдамдықты","Уақытты","Массаны"],a:1,e:"Жолдың уақыт бойынша туындысы — лездік жылдамдық."}
+];
+var done=0,good=0,box=$("quiz");
+Q.forEach(function(it,qi){
+ var d=document.createElement("div");d.className="q";
+ var p=document.createElement("p");p.textContent=(qi+1)+". "+it.q;d.appendChild(p);
+ var os=document.createElement("div");os.className="opts";
+ var fb=document.createElement("div");fb.className="fb";fb.setAttribute("aria-live","polite");
+ var bs=[],answered=false;
+ it.o.forEach(function(t,oi){
+  var b=document.createElement("button");b.type="button";b.textContent=t;
+  b.onclick=function(){
+   if(answered)return;answered=true;done++;
+   if(oi===it.a){good++;b.className="ok";fb.textContent="Дұрыс! "+it.e}
+   else{b.className="bad";bs[it.a].className="ok";fb.textContent="Қате. "+it.e}
+   if(done===Q.length)$("score").textContent="Нәтиже: "+good+" / "+Q.length;
+  };
+  bs.push(b);os.appendChild(b);
+ });
+ d.appendChild(os);d.appendChild(fb);box.appendChild(d);
+});
+
+var ri=function(a,b){return a+Math.floor(Math.random()*(b-a+1))};
+function T(n,t,first){var m=Math.abs(n),c=m==1?"":m;return(n<0?(first?"−":" − "):(first?"":" + "))+c+t}
+var FAM=[
+{b:"x²",f:function(a,b){return function(x){return a*x*x+b*x}},h:["x = 0, 1, 2 нүктелерінде h = 0.001 алып еңісті өлше. Сандар қалай өзгеріп жатыр?","Функция екі мүшеден тұрады. Әр мүшенің еңісін бөлек ойла: біреуі x-ке байланысты өседі, екіншісі бәрі бір.","x = 0 нүктесіндегі еңіс тек түзу мүшесінен шығады. Қалғанын x = 1 мен x = 2 арасындағы айырмадан тап."]},
+{b:"x³",f:function(a,b){return function(x){return a*x*x*x+b*x}},h:["x = 0, 1, 2, 3 нүктелерінде h = 0.001 алып өлше. Еңіс қалай өсіп жатыр?","Айырмаларды салыстыр: x = 1→2 және 2→3. Олар тұрақты ма, әлде өсе ме?","x = 0 нүктесіндегі еңіс сызықтық мүшенің коэффициентін береді. Қалған бөлікті x² пен салыстырып көр."]},
+{b:"sin x",f:function(a,b){return function(x){return a*Math.sin(x)+b*x}},h:["Еңіс тербеліп тұр. x = 0, 1.57, 3.14, 4.71 нүктелерін өлше.","x = 0 мен x = 3.14 нүктелеріндегі еңістерді салыстыр: қайсысында қандай мүше басым?","sin x-тің еңісі белгілі бір тригонометриялық функцияға ұқсайды. Ол x = 0-де қандай мән береді?"]},
+{b:"eˣ",f:function(a,b){return function(x){return a*Math.exp(x)+b*x}},h:["x = 0, 1, 2 нүктелерін өлше. Еңіс әр қадамда қанша есе өсіп жатыр?","eˣ мүшесінің еңісі функцияның өз мәніне қалай қатысты? Сол мәнді есептеп салыстыр.","Сызықтық мүшенің еңісі әрқашан бірдей. Өлшенген сандардан сол тұрақты бөлікті ажырат."]}
+];
+var cur,hc=0,solved=0,tries=0;
+function newTask(){
+ var fam=FAM[ri(0,3)],a=ri(2,5)*(Math.random()<.3?-1:1),b=ri(1,6)*(Math.random()<.5?-1:1);
+ cur={fam:fam,f:fam.f(a,b)};hc=0;tries=0;
+ $("ztask").textContent="f(x) = "+T(a,fam.b,true)+T(b,"x",false);
+ $("zlog").innerHTML="<tr><th>x</th><th>h</th><th>қиюшы еңісі</th></tr>";
+ $("zres").textContent="";$("zhint").textContent="";$("zf").value="";$("zdone").hidden=true;
+}
+function num(v){return parseFloat(String(v).replace(",","."))}
+function measure(){
+ var x=num($("zx").value),h=num($("zh").value);
+ if(!isFinite(x)||!isFinite(h)||h===0){$("zres").textContent="x пен h сан болуы керек, h нөл болмауы тиіс.";return}
+ var k=(cur.f(x+h)-cur.f(x))/h,t=$("zlog"),row=t.insertRow(1);
+ row.innerHTML="<td>"+r(x)+"</td><td>"+r(h)+"</td><td>"+(Math.round(k*10000)/10000).toString().replace("-","−")+"</td>";
+ while(t.rows.length>9)t.deleteRow(9);
+ $("zres").textContent="";
+}
+function parse(s){
+ s=s.toLowerCase().replace(/,/g,".");
+ if(!/^[0-9x+\-*\/^().\s]*$/.test(s.replace(/sin|cos|tan|exp|sqrt|ln|e/g,"")))return null;
+ s=s.replace(/\^/g,"**").replace(/\b(sin|cos|tan|exp|sqrt|ln)\b/g,function(m){return"Math."+(m=="ln"?"log":m)}).replace(/\be\b/g,"Math.E");
+ s=s.replace(/(\d|x|\))\s*(?=x|\(|Math)/g,"$1*");
+ try{var g=new Function("x","return "+s);g(1);return g}catch(e){return null}
+}
+function check(){
+ var g=parse($("zf").value);
+ if(!g){$("zres").textContent="Формуланы түсінбедім. Мысал: 3*x^2 - sin(x). Қосымша: cos(x), exp(x), ln(x).";return}
+ tries++;var pts=[-2,-1,.5,1.5,2.5],all=true,out=$("zres");out.textContent="";
+ pts.forEach(function(x){
+  var e=1e-5,truth=(cur.f(x+e)-cur.f(x-e))/(2*e),v=g(x),ok=isFinite(v)&&Math.abs(v-truth)<=0.02*Math.max(1,Math.abs(truth));
+  if(!ok)all=false;
+  var d=document.createElement("div");d.className=ok?"zok":"zno";
+  d.textContent=(ok?"✓ ":"✗ ")+"x = "+r(x)+": сенің мәнің "+(isFinite(v)?r(v):"анықталмаған");out.appendChild(d)});
+ if(all){solved++;out.insertAdjacentHTML("afterbegin","<div class='zok'><b>Дұрыс! Формуланы өзің таптың.</b></div>");$("zdone").hidden=false;$("zstat").textContent="Шешілген тапсырма: "+solved+". Әрекет саны: "+tries+", пайдаланған кеңес: "+hc+"."}
+ else out.insertAdjacentHTML("afterbegin","<div>Әзірге сәйкес келмейді. Қосымша нүктелерде еңісті өлшеп, сандарды формуламен салыстыр.</div>");
+}
+$("zm").onclick=measure;$("zc").onclick=check;$("zn").onclick=newTask;
+$("zhb").onclick=function(){if(hc<3){$("zhint").textContent="Кеңес "+(hc+1)+"/3: "+cur.fam.h[hc];hc++}else $("zhint").textContent="Кеңес таусылды. Өлшеу кестесін көбірек толтыр."};
+newTask();
+
+var dd=function(f,x){var e=1e-5;return(f(x+e)-f(x-e))/(2*e)};
+var tkS=0,erS=0,myOk=false,myP="";
+function rtask(){var fam=FAM[ri(0,3)],a=ri(2,5)*(Math.random()<.3?-1:1),b=ri(1,6)*(Math.random()<.5?-1:1);return{f:fam.f(a,b),s:"f(x) = "+T(a,fam.b,true)+T(b,"x",false)}}
+var c2=$("cv2"),x2=c2.getContext("2d"),tk;
+function dT(g){
+ var W=900,H=600,x0=tk.x0,y0=tk.f(x0),X0=x0-3,X1=x0+3,Y0=y0-8,Y1=y0+8;
+ var sx=function(x){return(x-X0)/6*W},sy=function(y){return H-(y-Y0)/16*H};
+ x2.clearRect(0,0,W,H);x2.strokeStyle=css("--grid");x2.lineWidth=1;
+ for(var i=Math.ceil(X0);i<=X1;i++){x2.beginPath();x2.moveTo(sx(i),0);x2.lineTo(sx(i),H);x2.stroke()}
+ for(var j=Math.ceil(Y0);j<=Y1;j++){x2.beginPath();x2.moveTo(0,sy(j));x2.lineTo(W,sy(j));x2.stroke()}
+ function pl(fn,c,w){x2.strokeStyle=c;x2.lineWidth=w;x2.beginPath();var st=false;for(var p=0;p<=W;p+=4){var y=fn(X0+p/W*6);if(!isFinite(y))continue;st?x2.lineTo(p,sy(y)):x2.moveTo(p,sy(y));st=true}x2.stroke()}
+ pl(tk.f,css("--curve"),4);if(g)pl(g,css("--tan"),3);
+ x2.fillStyle=css("--ink");x2.beginPath();x2.arc(sx(x0),sy(y0),8,0,7);x2.fill();
+}
+function newTan(){var t=rtask();tk={f:t.f,x0:ri(-2,2)};$("tf").textContent=t.s+",  x₀ = "+r(tk.x0);$("tin").value="";$("tres").textContent="";dT(null)}
+function chkTan(){
+ var g=parse($("tin").value),o=$("tres");
+ if(!g){o.textContent="Формуланы түсінбедім. Мысал: 2*x - 1";return}
+ dT(g);var x0=tk.x0,y0=tk.f(x0),k=dd(tk.f,x0),k2=g(x0+1)-g(x0);
+ if(!(Math.abs(g(x0)-y0)<=0.05+0.01*Math.abs(y0)))o.textContent="Сызығың жанасу нүктесінен өтпейді. Нүктенің y мәнін есептеп көр.";
+ else if(!(Math.abs(k2-k)<=0.03*Math.max(1,Math.abs(k))))o.textContent="Нүкте дұрыс, бірақ еңіс сәйкес емес. Еңісті өлшеп көр.";
+ else{tkS++;o.textContent="Дұрыс! Жанама теңдеуін өзің құрдың."}
+}
+$("tm").onclick=function(){var h=num($("th").value);if(!isFinite(h)||h===0){$("tres").textContent="h сан болуы керек, нөл емес.";return}$("tres").textContent="h = "+r(h)+" кезіндегі қиюшы еңісі: "+r((tk.f(tk.x0+h)-tk.f(tk.x0))/h)};
+$("tc").onclick=chkTan;$("tn").onclick=newTan;
+
+var sp=["⁰","¹","²","³","⁴","⁵"],sup=function(n){return n==1?"":sp[n]};
+function newErr(){
+ var n=ri(2,4),a=ri(2,5),b=ri(2,6),c=ri(1,9),bad=ri(1,3),v=ri(0,1),found=false;
+ var t1=(a*n)+"x"+sup(n-1),w1=v?(a*n)+"x"+sup(n):a+"x"+sup(n-1);
+ var why=[0,v?"Дәреже кемуі керек: xⁿ → n·xⁿ⁻¹.":"n-ге көбейту ұмытылған: (a·xⁿ)′ = a·n·xⁿ⁻¹.","(b·x)′ = b, өйткені x-тің туындысы 1.","Тұрақтының туындысы әрқашан 0."];
+ var s1=bad==1?w1:t1,s2=bad==2?b+"x":""+b,s3=bad==3?""+c:"0";
+ var fin=[s1,s2,s3].filter(function(q){return q!=="0"}).join(" + ");
+ var L=["f(x) = "+a+"x"+sup(n)+" + "+b+"x + "+c,"("+a+"x"+sup(n)+")′ = "+s1,"("+b+"x)′ = "+s2,"("+c+")′ = "+s3,"f′(x) = "+fin];
+ var box=$("err");box.innerHTML="";
+ L.forEach(function(t,i){
+  var bt=document.createElement("button");bt.type="button";bt.className="eb";bt.textContent=t;
+  var fb=document.createElement("div");fb.className="fb";fb.setAttribute("aria-live","polite");
+  bt.onclick=function(){
+   if(i===bad){fb.textContent="Дұрыс таптың! "+why[i];fb.className="fb zok";if(!found){found=true;erS++}}
+   else if(i===4)fb.textContent="Бұл жол алдыңғы жолдардан дұрыс қосылған. Қатені жоғарыдан ізде.";
+   else fb.textContent="Бұл жол дұрыс.";
+  };
+  box.appendChild(bt);box.appendChild(fb);
+ });
+}
+$("en").onclick=newErr;
+
+function myFn(){var g=parse($("cf").value),x0=num($("cx").value);return g&&isFinite(x0)?{g:g,x:x0}:null}
+$("cc").onclick=function(){
+ var m=myFn(),p=num($("cp").value),o=$("cr");
+ if(!m||!isFinite(p)){o.textContent="Формула, x₀ және болжам сан немесе дұрыс формула болуы керек.";return}
+ var t=dd(m.g,m.x);if(!isFinite(t)){o.textContent="Бұл нүктеде функция анықталмаған. Басқа x₀ ал.";return}
+ myP=$("cp").value;myOk=Math.abs(p-t)<=0.05*Math.max(1,Math.abs(t));
+ o.textContent=myOk?"✓ Болжамың дұрыс. Енді неге олай екенін төменге жаз.":"✗ Болжамың сәйкес келмейді. Өлшеп көріп, қайта болжа."
+};
+$("cm").onclick=function(){
+ var m=myFn(),o=$("cr");if(!m){o.textContent="Алдымен формула мен x₀ енгіз.";return}
+ o.textContent="Қиюшы еңісі: "+[1,.1,.01,.001].map(function(h){return"h="+h+" → "+r((m.g(m.x+h)-m.g(m.x))/h)}).join(";  ");
+};
+$("cw").onclick=function(){
+ var ta=$("cwo");
+ ta.value="ЖҰМЫС ПАРАҒЫ: ТУЫНДЫ\n\nЗертхана: формуласы табылған тапсырма саны: "+solved+"\nЖанама теңдеуі дұрыс жазылған тапсырма саны: "+tkS+"\nТабылған қателер саны: "+erS+"\n\nӨЗ ЕСЕБІМ\nМәтін: "+$("cs").value+"\nФункция: s(x) = "+$("cf").value+", x₀ = "+$("cx").value+"\nБолжамым: "+myP+" ("+(myOk?"дұрыс шықты":"әлі сәйкес келмеген")+")\nТүсіндірмем: "+$("ce").value;
+ ta.hidden=false;ta.select();try{document.execCommand("copy")}catch(e){}
+};
+newTan();newErr();
+})();
+</script>
+</body>
+</html>
